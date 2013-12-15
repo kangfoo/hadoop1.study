@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.kangfoo.study.hadoop1</groupId>
+		<artifactId>hadoop1.home</artifactId>
+		<version>${project.version}</version>
+	</parent>
+
+	<artifactId>apache.hadoop1.home</artifactId>
+	<packaging>pom</packaging>
+
+	<name>apache.hadoop1.home</name>
+	<url>http://maven.apache.org</url>
+
+	<modules>
+		<module>core</module>
+		<module>hdfs</module>
+		<module>mapred</module>
+	</modules>
+</project>
