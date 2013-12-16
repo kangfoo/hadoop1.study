@@ -86,7 +86,7 @@ public class HDFSTest {
 			out = fs.create(path);
 			out.write(s.getBytes());
 
-			// 为什么读不到呢？
+			// 为什么读不到呢？Thead.sleep(20000);也无效。
 			byte[] bytes = new byte[1024];
 			in = fs.open(path);
 
