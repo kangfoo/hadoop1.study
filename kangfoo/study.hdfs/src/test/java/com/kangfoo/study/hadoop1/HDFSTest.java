@@ -105,8 +105,26 @@ public class HDFSTest {
 		}
 	}
 
+	/**
+	 * 读数据
+	 * @throws IOException
+	 */
 	@Test
-	public void test3_RenameFile() throws IOException {
+	public void test3_ReadFile() throws IOException{
+		Path path = new Path("/test/a.txt");
+		FSDataInputStream in = null;
+					byte[] bytes = new byte[1024];
+					in = fs.open(path);
+
+					int readLen = in.read(bytes);
+					while (-1 != readLen) {
+						System.out.println(new String(bytes));
+						readLen = in.read(bytes);
+					}
+	}
+	
+	@Test
+	public void test4_RenameFile() throws IOException {
 		Path path = new Path("/test/a.txt");
 		Path newPath = new Path("/test/b.txt");
 		Boolean bl = fs.rename(path, newPath);
@@ -115,7 +133,7 @@ public class HDFSTest {
 	}
 
 	@Test
-	public void test4_UploadLocalFile1() throws IOException {
+	public void test5_UploadLocalFile1() throws IOException {
 		Path src = new Path("/Users/kangfoo-mac/study/hadoop-1.2.1/bin/rcc");
 		Path dst = new Path("/test");
 		fs.copyFromLocalFile(src, dst);
@@ -128,7 +146,7 @@ public class HDFSTest {
 	 * @throws IOException
 	 */
 	@Test
-	public void test5_UploadLocalFile2() throws IOException {
+	public void test6_UploadLocalFile2() throws IOException {
 		InputStream in = null;
 		FSDataOutputStream out = null;
 		try {
@@ -153,7 +171,7 @@ public class HDFSTest {
 	}
 
 	@Test
-	public void test6_ListFiles() throws IOException {
+	public void test7_ListFiles() throws IOException {
 		Path dst = new Path("/test");
 		FileStatus[] files = fs.listStatus(dst);
 
@@ -181,10 +199,14 @@ public class HDFSTest {
 		}
 	}
 
-	@AfterClass
-	public static void test99_HDFSDeleteDir() throws IOException {
-		Path path = new Path("/test");
-		fs.delete(path, true);
-	}
+	/**
+	 *  根据情况执行
+	 * @throws IOException
+	 */
+//	@AfterClass
+//	public static void test99_HDFSDeleteDir() throws IOException {
+//		Path path = new Path("/test");
+//		fs.delete(path, true);
+//	}
 
 }
