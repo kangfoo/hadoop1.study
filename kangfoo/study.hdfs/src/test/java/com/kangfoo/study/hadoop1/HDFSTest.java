@@ -85,18 +85,21 @@ public class HDFSTest {
 			Path path = new Path("/test/a.txt");
 			out = fs.create(path);
 			out.write(s.getBytes());
-
+			out.sync();
+			//out.flush();
 			// 为什么读不到呢？Thead.sleep(20000);也无效。why?
+			// 原因： 没有添加： flush().
 			byte[] bytes = new byte[1024];
 			in = fs.open(path);
 
+			StringBuffer sb = new StringBuffer();
 			int readLen = in.read(bytes);
 			while (-1 != readLen) {
-				System.out.println(new String(bytes));
+				sb.append(new String(bytes));
 				readLen = in.read(bytes);
 			}
 
-			// Assert.assertSame("hello hadoo写入成功", s, sb.toString());
+			Assert.assertEquals("hello hadoo写入成功", s.trim(), sb.toString().trim());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -203,10 +206,10 @@ public class HDFSTest {
 	 *  根据情况执行
 	 * @throws IOException
 	 */
-//	@AfterClass
-//	public static void test99_HDFSDeleteDir() throws IOException {
-//		Path path = new Path("/test");
-//		fs.delete(path, true);
-//	}
+	@AfterClass
+	public static void test99_HDFSDeleteDir() throws IOException {
+		Path path = new Path("/test");
+		fs.delete(path, true);
+	}
 
 }
