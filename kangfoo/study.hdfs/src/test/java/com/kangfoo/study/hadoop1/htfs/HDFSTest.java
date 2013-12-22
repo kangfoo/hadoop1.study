@@ -1,4 +1,4 @@
-package com.kangfoo.study.hadoop1;
+package com.kangfoo.study.hadoop1.htfs;
 
 import java.io.BufferedInputStream;
 import java.io.File;
