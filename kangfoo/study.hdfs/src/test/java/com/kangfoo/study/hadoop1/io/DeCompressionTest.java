@@ -17,6 +17,15 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+/**
+ * 
+ * export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/hadoop/env/hadoop/lib/native/Linux-amd64-64:/usr/local/lib
+ * mvn test -Dtest=com.kangfoo.study.hadoop1.io.DeCompressionTest
+ * 
+ * @date 20131222
+ * @author kangfoo-mac
+ *
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DeCompressionTest {
 
