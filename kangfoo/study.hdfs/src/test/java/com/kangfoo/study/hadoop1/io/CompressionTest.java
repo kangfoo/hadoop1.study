@@ -17,10 +17,17 @@ import org.junit.runners.MethodSorters;
 
 /**
  * 
+ * 测试本测试用例前，请先设置环境变量，再使用maven执行test
  * 
+ * <pre>
  * export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/hadoop/env/hadoop/lib/native/Linux-amd64-64:/usr/local/lib
  * mvn test -Dtest=com.kangfoo.study.hadoop1.io.CompressionTest
  * 
+ * -rw-rw-r--. 1 hadoop hadoop 520K 7月  23 06:26 releasenotes.html
+ * -rw-rw-r--. 1 hadoop hadoop 138K 12月 22 18:36 releasenotes.html.deflate
+ * -rw-rw-r--. 1 hadoop hadoop 138K 12月 22 18:36 releasenotes.html.gz
+ * -rw-rw-r--. 1 hadoop hadoop 220K 12月 22 18:36 releasenotes.html.snappy
+ * </pre>
  * @Date 2013-12-11 17:21
  * @author kangfoo-mac 
  *
