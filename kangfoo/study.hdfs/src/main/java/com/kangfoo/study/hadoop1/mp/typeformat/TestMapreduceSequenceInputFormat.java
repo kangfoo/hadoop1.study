@@ -84,7 +84,7 @@ public class TestMapreduceSequenceInputFormat {
     job.setReducerClass(IntSumReducer.class);
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(IntWritable.class);
-    job.setInputFormatClass(SequenceFileInputFormat.class);
+    job.setInputFormatClass(SequenceFileInputFormat.class); // 指明输入类型SequenceFileInputFormat
     FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
     FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
     System.exit(job.waitForCompletion(true) ? 0 : 1);

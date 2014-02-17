@@ -30,7 +30,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
 /**
- * key 类型默认为 TextInputFormat
+ * key 类型默认为 LongWritable(TextInputFormat)
  * @date 2014年2月17日
  * @author kangfoo-mac
  * @version 1.0.0

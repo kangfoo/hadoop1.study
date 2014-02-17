@@ -20,6 +20,8 @@ package com.kangfoo.study.hadoop1;
 
 import org.apache.hadoop.util.ProgramDriver;
 
+import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceMultipleInputs;
+import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceSequenceInputFormat;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceTextInputFormat;
 
 /**
@@ -32,7 +34,10 @@ public class ExampleDriver {
     int exitCode = -1;
     ProgramDriver pgd = new ProgramDriver();
     try {
+    	
     	pgd.addClass("TestMapreduceInputFormat", TestMapreduceTextInputFormat.class, "wordcount测试mapreduce TextInputFormat输入格式");
+    	pgd.addClass("TestMapreduceSequenceInputFormat", TestMapreduceSequenceInputFormat.class, "wordcount测试mapreduce SequenceInputFormat输入格式");
+    	pgd.addClass("TestMapreduceMultipleInputs", TestMapreduceMultipleInputs.class, "wordcount测试mapreduce TestMapreduceMultipleInputs 多输入");
 //      pgd.addClass("wordcount", WordCount.class, 
 //                   "A map/reduce program that counts the words in the input files.");
 //      pgd.addClass("aggregatewordcount", AggregateWordCount.class, 
