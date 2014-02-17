@@ -59,7 +59,7 @@ public class SequenceFileTest {
 	}
 	
 	@Test
-	public void test3_Writer() throws IOException {
+	public void test3_BZip2CodecWriter() throws IOException {
 		IntWritable key = new IntWritable();
 		Text value = new Text();
 	
@@ -74,7 +74,7 @@ public class SequenceFileTest {
 	}	
 	
 	@Test
-	public void test4_Reader() throws IOException {
+	public void test4_BZip2CodecReader() throws IOException {
 		reader(path2);
 	}
 

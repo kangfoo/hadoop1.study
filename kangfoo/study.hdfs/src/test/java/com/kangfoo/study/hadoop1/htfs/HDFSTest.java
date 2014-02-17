@@ -78,17 +78,17 @@ public class HDFSTest {
 	public void test2_CreateFile() throws IOException {
 		FSDataInputStream in = null;
 		FSDataOutputStream out = null;
-		
+
 		try {
 			String s = "hello hadoop";
 
 			Path path = new Path("/test/a.txt");
-			out = fs.create(path);
+			out = fs.create(path);//out = fs.create(path,false);//failed to create file /test/a.txt on client 192.168.56.1 either because the filename is invalid or the file exists
 			out.write(s.getBytes());
 			out.sync();
-			//out.flush();
+			// out.flush();
 			// 为什么读不到呢？Thead.sleep(20000);也无效。why?
-			// 原因： 没有添加： flush().
+			// 原因： 没有 flush(),强制刷新缓冲区.
 			byte[] bytes = new byte[1024];
 			in = fs.open(path);
 
@@ -99,7 +99,8 @@ public class HDFSTest {
 				readLen = in.read(bytes);
 			}
 
-			Assert.assertEquals("hello hadoo写入成功", s.trim(), sb.toString().trim());
+			Assert.assertEquals("hello hadoo写入成功", s.trim(), sb.toString()
+					.trim());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -110,22 +111,23 @@ public class HDFSTest {
 
 	/**
 	 * 读数据
+	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void test3_ReadFile() throws IOException{
+	public void TEST3_READFILE() throws IOException {
 		Path path = new Path("/test/a.txt");
 		FSDataInputStream in = null;
-					byte[] bytes = new byte[1024];
-					in = fs.open(path);
+		byte[] bytes = new byte[1024];
+		in = fs.open(path);
 
-					int readLen = in.read(bytes);
-					while (-1 != readLen) {
-						System.out.println(new String(bytes));
-						readLen = in.read(bytes);
-					}
+		int readLen = in.read(bytes);
+		while (-1 != readLen) {
+			System.out.println(new String(bytes));
+			readLen = in.read(bytes);
+		}
 	}
-	
+
 	@Test
 	public void test4_RenameFile() throws IOException {
 		Path path = new Path("/test/a.txt");
@@ -145,7 +147,8 @@ public class HDFSTest {
 	}
 
 	/**
-	 *  dd if=/dev/zero of=data bs=1024 count=1024
+	 * dd if=/dev/zero of=data bs=1024 count=1024
+	 * 
 	 * @throws IOException
 	 */
 	@Test
@@ -203,7 +206,8 @@ public class HDFSTest {
 	}
 
 	/**
-	 *  根据情况执行
+	 * 根据情况执行
+	 * 
 	 * @throws IOException
 	 */
 	@AfterClass

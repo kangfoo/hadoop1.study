@@ -77,9 +77,7 @@ public class CompressionTest {
 		CompressionOutputStream out = codec.createOutputStream(fileOut);
 		
 		FileInputStream in = new FileInputStream(inputFile);
-		IOUtils.copyBytes(in, out, 4096,false);
-		in.close();
-		out.close();
+		IOUtils.copyBytes(in, out, 4096,true);
 	}
 
 }

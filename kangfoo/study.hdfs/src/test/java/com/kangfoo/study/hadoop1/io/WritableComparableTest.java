@@ -25,7 +25,7 @@ public class WritableComparableTest {
 	public void test() throws IOException {
 		String path ="/Users/kangfoo-mac/tmp.txt";
 		
-		Student s = new Student("kang",22,"man");
+		Student s = new Student("kangfoo",2,"man");
 		FileOutputStream fopt = new FileOutputStream(new File(path)); 
 		DataOutputStream out = new DataOutputStream(fopt);
 		s.write(out);
