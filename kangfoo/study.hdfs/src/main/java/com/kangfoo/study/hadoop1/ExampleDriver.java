@@ -20,7 +20,7 @@ package com.kangfoo.study.hadoop1;
 
 import org.apache.hadoop.util.ProgramDriver;
 
-import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceInputFormat;
+import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceTextInputFormat;
 
 /**
  * A description of an example program based on its class and a 
@@ -32,7 +32,7 @@ public class ExampleDriver {
     int exitCode = -1;
     ProgramDriver pgd = new ProgramDriver();
     try {
-    	pgd.addClass("TestMapreduceInputFormat", TestMapreduceInputFormat.class, "wordcount测试mapreduce输入格式");
+    	pgd.addClass("TestMapreduceInputFormat", TestMapreduceTextInputFormat.class, "wordcount测试mapreduce TextInputFormat输入格式");
 //      pgd.addClass("wordcount", WordCount.class, 
 //                   "A map/reduce program that counts the words in the input files.");
 //      pgd.addClass("aggregatewordcount", AggregateWordCount.class, 
