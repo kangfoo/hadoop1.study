@@ -47,7 +47,7 @@ public class TestMapreduceMultipleInputs {
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
-		public void map(Object key, Text value, Context context)
+		public void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			StringTokenizer itr = new StringTokenizer(value.toString());
 			while (itr.hasMoreTokens()) {
@@ -63,7 +63,7 @@ public class TestMapreduceMultipleInputs {
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
-		public void map(Object key, Text value, Context context)
+		public void map(IntWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			StringTokenizer itr = new StringTokenizer(value.toString());
 			while (itr.hasMoreTokens()) {
@@ -92,7 +92,7 @@ public class TestMapreduceMultipleInputs {
 		Configuration conf = new Configuration();
 		String[] otherArgs = new GenericOptionsParser(conf, args)
 				.getRemainingArgs();
-		if (otherArgs.length != 2) {
+		if (otherArgs.length != 3) {
 			System.err.println("Usage: wordcount <in> <out>");
 			System.exit(2);
 		}
