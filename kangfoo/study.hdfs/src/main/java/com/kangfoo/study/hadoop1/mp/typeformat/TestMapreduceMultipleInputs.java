@@ -93,10 +93,10 @@ public class TestMapreduceMultipleInputs {
 		String[] otherArgs = new GenericOptionsParser(conf, args)
 				.getRemainingArgs();
 		if (otherArgs.length != 3) {
-			System.err.println("Usage: wordcount <in> <out>");
+			System.err.println("Usage: TestMapreduceMultipleInputs <in> <out>");
 			System.exit(2);
 		}
-		Job job = new Job(conf, "word count");
+		Job job = new Job(conf, "TestMapreduceMultipleInputs");
 		job.setJarByClass(TestMapreduceMultipleInputs.class);// 启动主函数类
 		// job.setMapperClass(Mapper1.class);
 		// job.setCombinerClass(IntSumReducer.class);

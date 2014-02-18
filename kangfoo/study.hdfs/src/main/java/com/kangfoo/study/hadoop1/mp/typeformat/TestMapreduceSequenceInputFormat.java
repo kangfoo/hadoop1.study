@@ -74,10 +74,10 @@ public class TestMapreduceSequenceInputFormat {
     Configuration conf = new Configuration();
     String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
     if (otherArgs.length != 2) {
-      System.err.println("Usage: wordcount <in> <out>");
+      System.err.println("Usage: TestMapreduceSequenceInputFormat <in> <out>");
       System.exit(2);
     }
-    Job job = new Job(conf, "word count");
+    Job job = new Job(conf, "TestMapreduceSequenceInputFormat");
     job.setJarByClass(TestMapreduceSequenceInputFormat.class);//启动主函数类
     job.setMapperClass(TokenizerMapper.class);
     job.setCombinerClass(IntSumReducer.class);
