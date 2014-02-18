@@ -35,23 +35,18 @@ public class TestPartitioner {
 	public static class Mapper1 extends
 			Mapper<LongWritable, Text, Text, IntWritable> {
 
-//		private final static IntWritable one = new IntWritable(1);
-//		private Text word = new Text();
-//
-//		public void map(LongWritable key, Text value, Context context)
-//				throws IOException, InterruptedException {
-//			String[] s = value.toString().split("\\s+");
-//
-//			word.set(s[0]);
-//			one.set(Integer.parseInt(s[1]));
-//			context.write(word, one);
-//		}
-		@Override
-		protected void map(LongWritable key, Text value,Context context)
-		throws IOException, InterruptedException {
-		String[] s = value.toString().split("\\s+");
-		context.write(new Text(s[0]), new IntWritable(Integer.parseInt(s[1])));
+		private final static IntWritable one = new IntWritable(1);
+		private Text word = new Text();
+
+		public void map(LongWritable key, Text value, Context context)
+				throws IOException, InterruptedException {
+			String[] s = value.toString().split("\\s+");
+
+			word.set(s[0]);
+			one.set(Integer.parseInt(s[1]));
+			context.write(word, one);
 		}
+
 	}
 
 	/**
@@ -63,27 +58,17 @@ public class TestPartitioner {
 	 */
 	public static class Reducer1 extends
 			Reducer<Text, IntWritable, Text, IntWritable> {
-//		private IntWritable result = new IntWritable();
-//
-//		@Override
-//		protected void reduce(Text key, Iterable<IntWritable> values,
-//				Context context) throws IOException, InterruptedException {
-//			int sum = 0;
-//			for (IntWritable val : values) {
-//				sum += val.get();
-//			}
-//			result.set(sum);
-//			context.write(key, result);
-//		}
-		
+		private IntWritable result = new IntWritable();
+
 		@Override
-		protected void reduce(Text key, Iterable<IntWritable> value,Context context)
-		throws IOException, InterruptedException {
-		int sum = 0;
-		for(IntWritable val:value){
-		sum += val.get();
-		}
-		context.write(key, new IntWritable(sum));
+		protected void reduce(Text key, Iterable<IntWritable> values,
+				Context context) throws IOException, InterruptedException {
+			int sum = 0;
+			for (IntWritable val : values) {
+				sum += val.get();
+			}
+			result.set(sum);
+			context.write(key, result);
 		}
 
 	}
@@ -99,13 +84,13 @@ public class TestPartitioner {
 
 		@Override
 		public int getPartition(Text key, IntWritable value, int numPartitions) {
-			if(key.toString().equals("shoes"))  //转发给4个不同的reducer
-		        return 0;
-		        if(key.toString().equals("hat"))
-		        return 1;
-		        if(key.toString().equals("stockings"))
-		        return 2;
-		return 3;
+			if (key.toString().equals("shoes")) // 转发给4个不同的reducer
+				return 0;
+			if (key.toString().equals("hat"))
+				return 1;
+			if (key.toString().equals("stockings"))
+				return 2;
+			return 3;
 		}
 
 	}
@@ -117,45 +102,26 @@ public class TestPartitioner {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-//		Configuration conf = new Configuration();
-//		String[] otherArgs = new GenericOptionsParser(conf, args)
-//				.getRemainingArgs();
-//		if (otherArgs.length != 2) {
-//			System.err.println("Usage: TestPartitioner <in> <out> ");
-//			System.exit(2);
-//		}
-//		Job job = new Job(conf, "TestPartitioner");
-//		job.setJarByClass(TestPartitioner.class);// 启动主函数类
-//		job.setMapperClass(Mapper1.class);
-//		job.setReducerClass(Reducer1.class);
-//		job.setPartitionerClass(Partitioner1.class);
-//		job.setNumReduceTasks(4); // 设置4个reducer
-//
-//		job.setOutputKeyClass(Text.class);
-//		job.setOutputValueClass(IntWritable.class);
-//		FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
-//		FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
-//		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		Configuration conf = new Configuration();
+		String[] otherArgs = new GenericOptionsParser(conf, args)
+				.getRemainingArgs();
+		if (otherArgs.length != 2) {
+			System.err.println("Usage: TestPartitioner <in> <out> ");
+			System.exit(2);
+		}
+		Job job = new Job(conf, "TestPartitioner");
+		job.setJarByClass(TestPartitioner.class);// 启动主函数类
+		job.setMapperClass(Mapper1.class);
+		job.setReducerClass(Reducer1.class);
+		job.setPartitionerClass(Partitioner1.class);
+		job.setNumReduceTasks(4); // 设置4个reducer
 
-		 Configuration conf = new Configuration();
-		   String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
-		   if (otherArgs.length != 2) {
-		     System.err.println("Usage: wordcount ");
-		     System.exit(2);
-		   }
-		   Job job = new Job(conf, "word count");
-		   job.setJarByClass(TestPartitioner.class);
-		   job.setMapperClass(Mapper1.class);
-		   job.setReducerClass(Reducer1.class);
-		   job.setPartitionerClass(Partitioner1.class);
-		   job.setNumReduceTasks(4); //设置4个reducer
-		   
-		   
-		   job.setOutputKeyClass(Text.class);
-		   job.setOutputValueClass(IntWritable.class);
-		   FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
-		   FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
-		   System.exit(job.waitForCompletion(true) ? 0 : 1);
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(IntWritable.class);
+		FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
+		FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
+		System.exit(job.waitForCompletion(true) ? 0 : 1);
+
 	}
 
 }
