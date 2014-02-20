@@ -25,6 +25,7 @@ import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceMultipleInputs;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceSequenceInputFormat;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceTextInputFormat;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestPartitioner;
+import com.kangfoo.study.hadoop1.mp.typeformat.TestRecordReader;
 
 /**
  * A description of an example program based on its class and a human-readable
@@ -48,7 +49,9 @@ public class ExampleDriver {
 					"wordcount测试mapreduce TestMapreduceMultipleInputs 多输入");
 			pgd.addClass("TestCombiner", TestCombiner.class, "测试Combiner组件");
 			pgd.addClass("TestPartitioner", TestPartitioner.class, "测试Partitioner组件");
+			pgd.addClass("TestRecordReader", TestRecordReader.class, "测试RecordReader组件");
 
+			
 			
 			
 			pgd.driver(argv);
