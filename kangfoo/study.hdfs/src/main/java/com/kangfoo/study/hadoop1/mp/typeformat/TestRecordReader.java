@@ -24,7 +24,10 @@ import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.util.LineReader;
 
 /**
- * 自定义 RecordReader
+ * 自定义 RecordReader。 分别纪录奇数行和偶数行之和。
+ * 1. 重写RecordReader。 key 就是行号。
+ * 2. 两个汇总的Partitioner，两个Reduce
+ * 3. 实现自己的 InputFormat类输入格式。不分割，读取整个文件。避免行号奇偶性变化
  * 
  * @date 2014年2月20日
  * @author kangfoo-mac
@@ -51,7 +54,7 @@ public class TestRecordReader {
 		@Override
 		public int getPartition(LongWritable key, Text value, int numPartitions) {
 			if (key.get() % 2 == 0) {
-				key.set(0);// 偶素行，key 以 0 表示
+				key.set(0);// 偶数行，key 以 0 表示
 				return 0;
 			} else {
 				key.set(1);// 奇数行，key 以 1 表示
@@ -84,7 +87,7 @@ public class TestRecordReader {
 			IntWritable writableValue = new IntWritable();
 			
 			if (key.get()==0) {
-				writableKey.set("偶素行之和：");
+				writableKey.set("偶数行之和：");
 			}else{
 				writableKey.set("奇数行之和：");
 			}
@@ -127,9 +130,9 @@ public class TestRecordReader {
 	 */
 	public static class RecordReader1 extends RecordReader<LongWritable, Text> {
 
-		private long start; // 偏移量
-		private long pos; // 行号
-		private long end; // 当前分片，在整个文件的结束位置
+		private long start;  // 当前分片在整个文件中的位置
+		private long pos; // 在当前分片行号
+		private long end; // 当前分片，在整个文件的位置
 		private FSDataInputStream fin = null; //
 		private LongWritable key = null; // 行号
 		private Text value = null; // 文本
@@ -152,7 +155,7 @@ public class TestRecordReader {
 		}
 
 		/**
-		 * 未考虑跨分片
+		 * 不分片。不用考虑跨分片读取。
 		 */
 		@Override
 		public boolean nextKeyValue() throws IOException, InterruptedException {

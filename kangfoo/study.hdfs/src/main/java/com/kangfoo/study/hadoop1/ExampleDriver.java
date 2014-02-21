@@ -20,6 +20,8 @@ package com.kangfoo.study.hadoop1;
 
 import org.apache.hadoop.util.ProgramDriver;
 
+import com.kangfoo.study.hadoop1.mp.counter.TestCounter;
+import com.kangfoo.study.hadoop1.mp.join.TestReduceSideJoin;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestCombiner;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceMultipleInputs;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceSequenceInputFormat;
@@ -50,9 +52,10 @@ public class ExampleDriver {
 			pgd.addClass("TestCombiner", TestCombiner.class, "测试Combiner组件");
 			pgd.addClass("TestPartitioner", TestPartitioner.class, "测试Partitioner组件");
 			pgd.addClass("TestRecordReader", TestRecordReader.class, "测试RecordReader组件");
-
+			pgd.addClass("TestCounter", TestCounter.class, "测试TestCounter组件");
+			pgd.addClass("TestReduceSideJoin", TestReduceSideJoin.class, "测试TestReduceSideJoin组件");
 			
-			
+				
 			
 			pgd.driver(argv);
 
