@@ -5,6 +5,7 @@ package com.kangfoo.study.hadoop1.mp.join;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ReduceSideReducer extends
 	protected void reduce(IntWritable key, Iterable<EmpDep> values,
 			Context context) throws IOException, InterruptedException {
 		String depName = "";
+				
 		List<EmpDep> list = new LinkedList<EmpDep>();// 存储拷贝副本
 
 		// 先找 dep no
@@ -39,8 +41,8 @@ public class ReduceSideReducer extends
 		for (EmpDep v : list) {
 			if (v.getTable().equals("EMP")) {
 				v.setDepName(depName);
-				context.write(NullWritable.get(), v);
 			}
+			context.write(NullWritable.get(), v);
 		}
 	}
 }
