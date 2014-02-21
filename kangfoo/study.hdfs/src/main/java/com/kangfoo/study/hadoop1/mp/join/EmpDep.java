@@ -33,6 +33,8 @@ public class EmpDep implements WritableComparable {
 		this.age = empDep.getAge();
 		this.depNo = empDep.getDepNo();
 		this.depName = empDep.getDepName();
+
+		this.table = empDep.getTable();
 	}
 
 	@Override
