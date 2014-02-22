@@ -3,6 +3,7 @@
  */
 package com.kangfoo.study.hadoop1.mp.sort;
 
+import java.io.IOException;
 import java.net.URI;
 
 import org.apache.hadoop.conf.Configuration;
@@ -10,15 +11,16 @@ import org.apache.hadoop.filecache.DistributedCache;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Partitioner;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.partition.InputSampler;
 import org.apache.hadoop.mapreduce.lib.partition.TotalOrderPartitioner;
 import org.apache.hadoop.util.GenericOptionsParser;
-
-import com.kangfoo.study.hadoop1.mp.sort.TestDefaultSort.Mapper1;
-import com.kangfoo.study.hadoop1.mp.sort.TestDefaultSort.Reducer1;
 
 /**
  * @date 2014年2月22日
@@ -26,6 +28,47 @@ import com.kangfoo.study.hadoop1.mp.sort.TestDefaultSort.Reducer1;
  * @version 1.0.0
  */
 public class TestTotalOrderPartitioner {
+
+	public static class Mapper1 extends
+			Mapper<LongWritable, Text, LongWritable, NullWritable> {
+
+		@Override
+		protected void map(LongWritable key, Text value, Context context)
+				throws IOException, InterruptedException {
+			String[] values = value.toString().split("\\s+");
+			context.write(new LongWritable(Long.parseLong(values[0])),
+					NullWritable.get());
+		}
+	}
+
+	public static class Reducer1 extends
+			Reducer<LongWritable, NullWritable, LongWritable, NullWritable> {
+
+		@Override
+		protected void reduce(LongWritable key, Iterable<NullWritable> value,
+				Context context) throws IOException, InterruptedException {
+			context.write(key, NullWritable.get());
+		}
+	}
+
+	public static class Partitioner1 extends
+			Partitioner<LongWritable, NullWritable> {
+
+		@Override
+		public int getPartition(LongWritable key, NullWritable value,
+				int numPartitions) {
+			if (key.get() < 100) {
+				return 0 % numPartitions;
+			}
+			if (key.get() >= 100 && key.get() < 1000) {
+				return 1 % numPartitions;
+			}
+
+			return 2 % numPartitions;
+
+		}
+
+	}
 
 	/**
 	 * @param args
@@ -38,12 +81,12 @@ public class TestTotalOrderPartitioner {
 			System.err.println("Usage: TestTotalOrderPartitioner <in> <out>");
 			System.exit(2);
 		}
-		
+
 		Job job = new Job(conf, "TestTotalOrderPartitioner");
 
 		FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
 		FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
-		
+
 		job.setJarByClass(TestTotalOrderPartitioner.class);// 启动主函数类
 		job.setMapperClass(Mapper1.class);
 
@@ -61,7 +104,7 @@ public class TestTotalOrderPartitioner {
 
 		TotalOrderPartitioner.setPartitionFile(conf, partitionFile);
 		InputSampler.writePartitionFile(job, sampler);
-		
+
 		// Add to DistributedCache
 		URI partitionUri = new URI(partitionFile.toString() + "#_partitions");
 		DistributedCache.addCacheFile(partitionUri, conf);
@@ -74,7 +117,7 @@ public class TestTotalOrderPartitioner {
 		job.setOutputValueClass(NullWritable.class);
 
 		System.exit(job.waitForCompletion(true) ? 0 : 1);
-	
+
 	}
 
 }
