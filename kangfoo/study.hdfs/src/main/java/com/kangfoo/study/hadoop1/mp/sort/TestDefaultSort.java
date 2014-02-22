@@ -31,15 +31,12 @@ public class TestDefaultSort {
 	public static class Mapper1 extends
 			Mapper<LongWritable, Text, LongWritable, NullWritable> {
 
-		LongWritable longWritable = new LongWritable();
-
 		@Override
 		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String[] values = value.toString().split("\\s+");
-
-			longWritable.set(Long.parseLong(values[0]));
-			context.write(longWritable, NullWritable.get());
+			context.write(new LongWritable(Long.parseLong(values[0])),
+					NullWritable.get());
 		}
 	}
 
@@ -53,19 +50,21 @@ public class TestDefaultSort {
 		}
 	}
 
-	public static class Partitioner1 extends Partitioner<LongWritable, NullWritable> {
+	public static class Partitioner1 extends
+			Partitioner<LongWritable, NullWritable> {
 
 		@Override
 		public int getPartition(LongWritable key, NullWritable value,
 				int numPartitions) {
-			long v = key.get();
-			if (v < 100) {
+			if (key.get() < 100) {
 				return 0 % numPartitions;
-			} else if (v >= 100 && v < 1000) {
-				return 1 % numPartitions;
-			} else {
-				return 2 % numPartitions;
 			}
+			if (key.get() >= 100 && key.get() < 1000) {
+				return 1 % numPartitions;
+			}
+
+			return 2 % numPartitions;
+
 		}
 
 	}
@@ -81,7 +80,7 @@ public class TestDefaultSort {
 		Job job = new Job(conf, "TestSort");
 		job.setJarByClass(TestDefaultSort.class);// 启动主函数类
 		job.setMapperClass(Mapper1.class);
-		
+
 		job.setReducerClass(Reducer1.class);
 		job.setPartitionerClass(Partitioner1.class);
 		job.setNumReduceTasks(3);// 3个Reduce
