@@ -44,7 +44,7 @@ public class TestTotalOrderPartitioner {
 		FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
 		FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
 		
-		job.setJarByClass(TestDefaultSort.class);// 启动主函数类
+		job.setJarByClass(TestTotalOrderPartitioner.class);// 启动主函数类
 		job.setMapperClass(Mapper1.class);
 
 		job.setReducerClass(Reducer1.class);
