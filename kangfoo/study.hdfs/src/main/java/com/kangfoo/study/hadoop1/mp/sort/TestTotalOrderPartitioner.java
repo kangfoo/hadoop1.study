@@ -102,11 +102,14 @@ public class TestTotalOrderPartitioner {
 		input = input.makeQualified(input.getFileSystem(conf));
 		Path partitionFile = new Path(input, "_partitions");
 
+		System.out.println(partitionFile+"\txxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		TotalOrderPartitioner.setPartitionFile(conf, partitionFile);
 		InputSampler.writePartitionFile(job, sampler);
 
 		// Add to DistributedCache
 		URI partitionUri = new URI(partitionFile.toString() + "#_partitions");
+		System.out.println(partitionUri+"\txxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
 		DistributedCache.addCacheFile(partitionUri, conf);
 		DistributedCache.createSymlink(conf);
 
