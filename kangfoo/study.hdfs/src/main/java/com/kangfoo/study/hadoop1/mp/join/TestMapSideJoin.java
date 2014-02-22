@@ -3,8 +3,6 @@
  */
 package com.kangfoo.study.hadoop1.mp.join;
 
-import java.io.IOException;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.filecache.DistributedCache;
 import org.apache.hadoop.fs.Path;
@@ -35,7 +33,7 @@ public class TestMapSideJoin {
 			System.exit(2);
 		}
 
-		DistributedCache.addCacheFile(new Path(args[1]).toUri(), conf);
+		DistributedCache.addCacheFile(new Path(args[1]).toUri(), conf);// 将本地文件复制到hdfs文件系统中。
 
 		Job job = new Job(conf, "TestMapSideJoin");
 		job.setJarByClass(TestMapSideJoin.class);
