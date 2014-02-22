@@ -24,6 +24,7 @@ import com.kangfoo.study.hadoop1.mp.counter.TestCounter;
 import com.kangfoo.study.hadoop1.mp.join.TestMapSideJoin;
 import com.kangfoo.study.hadoop1.mp.join.TestReduceSideJoin;
 import com.kangfoo.study.hadoop1.mp.sort.TestDefaultSort;
+import com.kangfoo.study.hadoop1.mp.sort.TestTotalOrderPartitioner;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestCombiner;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceMultipleInputs;
 import com.kangfoo.study.hadoop1.mp.typeformat.TestMapreduceSequenceInputFormat;
@@ -58,6 +59,8 @@ public class ExampleDriver {
 			pgd.addClass("TestReduceSideJoin", TestReduceSideJoin.class, "测试TestReduceSideJoin组件");
 			pgd.addClass("TestMapSideJoin", TestMapSideJoin.class, "测试TestMapSideJoin组件");
 			pgd.addClass("TestDefaultSort", TestDefaultSort.class, "测试TestDefaultSort组件");
+			pgd.addClass("TestTotalOrderPartitioner", TestTotalOrderPartitioner.class, "测试TestTotalOrderPartitioner组件");
+			
 			
 					
 			

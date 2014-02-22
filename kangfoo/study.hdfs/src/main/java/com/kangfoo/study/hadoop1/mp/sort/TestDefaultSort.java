@@ -19,7 +19,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
 /**
- * 
+ * 请使用RandomGenerator类生成准备数据。
  * 使用Hadoop默认的shuff机制，对数据key进行排序。按key的区间值进行分区。
  * 
  * @date 2014年2月22日
