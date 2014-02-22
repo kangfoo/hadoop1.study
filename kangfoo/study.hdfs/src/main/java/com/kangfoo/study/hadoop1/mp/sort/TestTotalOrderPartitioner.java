@@ -98,7 +98,8 @@ public class TestTotalOrderPartitioner {
 		InputSampler.RandomSampler<LongWritable, NullWritable> sampler = new InputSampler.RandomSampler<LongWritable, NullWritable>(
 				0.1, 10000, 10);
 
-		Path input = FileInputFormat.getInputPaths(job)[0];
+	//	Path input = FileInputFormat.getInputPaths(job)[0];
+		Path input = new Path("hdfs://master11:9000/user/hadoop/");
 		input = input.makeQualified(input.getFileSystem(conf));
 		Path partitionFile = new Path(input, "_partitions");
 
